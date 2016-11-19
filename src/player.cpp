@@ -1,9 +1,6 @@
 #include "player.h"
 #include "scene.h"
 #include "asteroid.h"
-#include "projectile.h"
-#include "explosion.h"
-
 #include "object_frag.h"
 #include "object_vert.h"
 
@@ -45,10 +42,10 @@ bool Player::Update(Scene &scene, float dt) {
 
     if (glm::distance(position, asteroid->position) < asteroid->scale.y) {
       // Explode
-      auto explosion = ExplosionPtr(new Explosion{});
-      explosion->position = position;
-      explosion->scale = scale * 3.0f;
-      scene.objects.push_back(explosion);
+//      auto explosion = ExplosionPtr(new Explosion{});
+//      explosion->position = position;
+//      explosion->scale = scale * 3.0f;
+//      scene.objects.push_back(explosion);
 
       // Die
       return false;
@@ -73,9 +70,9 @@ bool Player::Update(Scene &scene, float dt) {
     // Invert file offset
     fireOffset = -fireOffset;
 
-    auto projectile = ProjectilePtr(new Projectile{});
-    projectile->position = position + glm::vec3(0.0f, 0.0f, 0.3f) + fireOffset;
-    scene.objects.push_back(projectile);
+//    auto projectile = ProjectilePtr(new Projectile{});
+//    projectile->position = position + glm::vec3(0.0f, 0.0f, 0.3f) + fireOffset;
+//    scene.objects.push_back(projectile);
   }
 
   GenerateModelMatrix();

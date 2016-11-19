@@ -34,6 +34,7 @@ public:
   glm::vec3 rotation;
   glm::vec3 scale;
   glm::mat4 modelMatrix;
+    //TODO add listeners...
 
 protected:
   // Generate modelMatrix from properties

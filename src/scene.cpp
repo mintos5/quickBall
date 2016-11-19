@@ -7,7 +7,7 @@ Scene::~Scene() {
 }
 
 void Scene::Update(float time) {
-  camera->Update();
+  camera->Update(*this);
 
   // Use iterator to update all objects so we can remove while iterating
   auto i = std::begin(objects);

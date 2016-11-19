@@ -16,9 +16,7 @@
 
 #include "scene.h"
 #include "camera.h"
-#include "generator.h"
 #include "player.h"
-#include "space.h"
 
 const unsigned int SIZE = 512;
 
@@ -30,21 +28,15 @@ void InitializeScene() {
 
   // Create a camera
   auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 100.0f});
-  camera->position.z = -15.0f;
+  //camera->position.z = -10.0f;
   scene.camera = camera;
 
-  // Add space background
-  auto space = SpacePtr(new Space{});
-  scene.objects.push_back(space);
-
   // Add generator to scene
-  auto generator = GeneratorPtr(new Generator{});
-  generator->position.y = 10.0f;
-  scene.objects.push_back(generator);
 
   // Add player to the scene
   auto player = PlayerPtr(new Player{});
-  player->position.y = -6;
+  player->position.y = -3;
+    player->position.z = +5;
   scene.objects.push_back(player);
 }
 

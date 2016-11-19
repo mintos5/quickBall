@@ -10,16 +10,19 @@
 // Simple camera object that keeps track of viewMatrix and projectionMatrix
 // the projectionMatrix is by default constructed as perspective projection
 // the viewMatrix is generated from up, position and back vectors on Update
+class Scene;
+
 class Camera {
 public:
   Camera(float fow = 45.0f, float ratio = 1.0f, float near = 0.1f, float far = 10.0f);
   ~Camera();
 
-  void Update();
+  void Update(Scene &scene);
 
   glm::vec3 up;
   glm::vec3 position;
   glm::vec3 back;
+  glm::vec3 translation;
 
   glm::mat4 viewMatrix;
   glm::mat4 projectionMatrix;

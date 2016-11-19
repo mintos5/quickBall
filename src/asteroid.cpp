@@ -1,6 +1,6 @@
 #include "asteroid.h"
-#include "projectile.h"
-#include "explosion.h"
+//#include "projectile.h"
+//#include "explosion.h"
 
 #include "object_frag.h"
 #include "object_vert.h"
@@ -43,30 +43,30 @@ bool Asteroid::Update(Scene &scene, float dt) {
     if (obj.get() == this) continue;
 
     // We only need to collide with asteroids and projectiles, ignore other objects
-    auto asteroid = std::dynamic_pointer_cast<Asteroid>(obj);
-    auto projectile = std::dynamic_pointer_cast<Projectile>(obj);
-    if (!asteroid && !projectile) continue;
+    //auto asteroid = std::dynamic_pointer_cast<Asteroid>(obj);
+    //auto projectile = std::dynamic_pointer_cast<Projectile>(obj);
+    //if (!asteroid && !projectile) continue;
 
     // When colliding with other asteroids make sure the object is older than .5s
     // This prevents excessive collisions when asteroids explode.
-    if (asteroid && age < 0.5f) continue;
+    //if (asteroid && age < 0.5f) continue;
 
     // Compare distance to approximate size of the asteroid estimated from scale.
-    if (glm::distance(position, obj->position) < (obj->scale.y + scale.y)*0.7f) {
-      int pieces = 3;
-
-      // Too small to split into pieces
-      if (scale.y < 0.5) pieces = 0;
-
-      // The projectile will be destroyed
-      if (projectile) projectile->Destroy();
-
-      // Generate smaller asteroids
-      Explode(scene, (obj->position+position)/2.0f, (obj->scale+scale)/2.0f, pieces);
-
-      // Destroy self
-      return false;
-    }
+//    if (glm::distance(position, obj->position) < (obj->scale.y + scale.y)*0.7f) {
+//      int pieces = 3;
+//
+//      // Too small to split into pieces
+//      if (scale.y < 0.5) pieces = 0;
+//
+//      // The projectile will be destroyed
+//      if (projectile) projectile->Destroy();
+//
+//      // Generate smaller asteroids
+//      Explode(scene, (obj->position+position)/2.0f, (obj->scale+scale)/2.0f, pieces);
+//
+//      // Destroy self
+//      return false;
+//    }
   }
 
   // Generate modelMatrix from position, animateOn and scale
@@ -77,11 +77,11 @@ bool Asteroid::Update(Scene &scene, float dt) {
 
 void Asteroid::Explode(Scene &scene, glm::vec3 explPosition, glm::vec3 explScale, int pieces) {
   // Generate explosion
-  auto explosion = ExplosionPtr(new Explosion{});
-  explosion->position = explPosition;
-  explosion->scale = explScale;
-  explosion->speed = speed/2.0f;
-  scene.objects.push_back(explosion);
+//  auto explosion = ExplosionPtr(new Explosion{});
+//  explosion->position = explPosition;
+//  explosion->scale = explScale;
+//  explosion->speed = speed/2.0f;
+//  scene.objects.push_back(explosion);
 
   // Generate smaller asteroids
   for (int i = 0; i < pieces; i++) {

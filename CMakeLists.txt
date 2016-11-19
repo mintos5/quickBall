@@ -87,8 +87,8 @@ set(GL_GAME_SRC
         src/asteroid.cpp
         src/player.cpp)
 generate_shaders(GL_GAME_SHADERS
-        src/gl_scene/object_frag.glsl
-        src/gl_scene/object_vert.glsl)
+        src/object_frag.glsl
+        src/object_vert.glsl)
 add_executable(gl_quickball ${GL_GAME_SRC} ${GL_GAME_SHADERS})
 target_link_libraries(gl_quickball libppgso)
 install(TARGETS gl_quickball DESTINATION .)
