@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
+#include <iostream>
 
 plane::plane(ShaderPtr program) {
     this->program = program;
@@ -30,8 +31,8 @@ plane::plane(ShaderPtr program) {
             {0.3f,0.3f,0.0f},
             {0.7f,0.1f,0.0f},
     };
-    generatePoints(startPoints,4,4,15,8);
-    generateIndices(15, 8,this->indices);
+    generatePoints(startPoints,4,4,5,8);
+    generateIndices(5, 8,this->indices);
     //generateTextCoord(15,8);
     initialize();
 }
@@ -110,8 +111,8 @@ void plane::generateIndices(int resX, int resY,std::vector<GLuint>& out) {
             out.push_back(corner+resY);
             //next triangle
             out.push_back(corner+resY);
-            out.push_back(corner+resY+1);
             out.push_back(corner+1);
+            out.push_back(corner+resY+1);
         }
     }
 }

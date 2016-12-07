@@ -59,7 +59,8 @@ add_library(libppgso STATIC
         src/lib/mesh.cpp
         src/lib/tiny_obj_loader.cpp
         src/lib/shader.cpp
-        src/lib/texture.cpp)
+        src/lib/texture.cpp
+        src/lib/plane.cpp)
 # Make sure GLM uses radians and static GLEW library
 target_compile_definitions(libppgso PUBLIC -DGLM_FORCE_RADIANS -DGLEW_STATIC )
 # Link to GLFW, GLEW and OpenGL
@@ -85,7 +86,7 @@ set(GL_GAME_SRC
         src/scene.cpp
         src/camera.cpp
         src/asteroid.cpp
-        src/player.cpp)
+        src/player.cpp src/ground.cpp src/ground.h src/fence.cpp src/fence.h)
 generate_shaders(GL_GAME_SHADERS
         src/object_frag.glsl
         src/object_vert.glsl)

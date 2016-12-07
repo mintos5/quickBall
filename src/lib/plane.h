@@ -32,6 +32,7 @@ public:
     void render();
     void animate(float time);
 };
+typedef std::shared_ptr<plane> PlanePtr;
 
 
 #endif //PPGSO_PLANE_H

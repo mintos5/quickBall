@@ -17,8 +17,11 @@
 #include "scene.h"
 #include "camera.h"
 #include "player.h"
+#include "ground.h"
+#include "asteroid.h"
+#include "fence.h"
 
-const unsigned int SIZE = 512;
+const unsigned int SIZE = 600;
 
 Scene scene;
 
@@ -34,10 +37,24 @@ void InitializeScene() {
   // Add generator to scene
 
   // Add player to the scene
-  auto player = PlayerPtr(new Player{});
-  player->position.y = -3;
-    player->position.z = +5;
+  auto player = PlayerPtr(new Player{camera});
+  player->position.y = -0.8;
+  player->position.z = -3;
+    player->scale = glm::vec3(0.3,0.3,0.3);
   scene.objects.push_back(player);
+
+  //add test object
+    auto test = GroundPtr(new ground{});
+    test->position.z = -32;
+    scene.objects.push_back(test);
+
+    auto object = FencePtr(new fence{});
+    object->scale = glm::vec3(0.4,0.4,0.4);
+    object->position.y = -1.1;
+    object->position.z = -5;
+    object->position.x = 0;
+    scene.objects.push_back(object);
+
 }
 
 // Keyboard press event handler
@@ -102,6 +119,7 @@ int main() {
   glDepthFunc(GL_LEQUAL);
 
   // Enable polygon culling
+    //TODO ask how to solve...
   glEnable(GL_CULL_FACE);
   glFrontFace(GL_CCW);
   glCullFace(GL_BACK);
@@ -118,7 +136,7 @@ int main() {
     time = (float)glfwGetTime();
 
     // Set gray background
-    glClearColor(.5f,.5f,.5f,0);
+    glClearColor(0.0f,0.0f,.9f,0);
     // Clear depth and color buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

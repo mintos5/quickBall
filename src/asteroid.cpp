@@ -10,15 +10,15 @@ Asteroid::Asteroid() {
   age = 0;
 
   // Set random scale speed and animateOn
-  scale *= Rand(1.0f, 3.0f);
-  speed = glm::vec3(Rand(-2.0f, 2.0f), Rand(-5.0f, -10.0f), 0.0f);
-  rotation = glm::vec3(Rand(-PI, PI), Rand(-PI, PI), Rand(-PI, PI));
-  rotMomentum = glm::vec3(Rand(-PI, PI), Rand(-PI, PI), Rand(-PI, PI));
+  //scale *= Rand(1.0f, 3.0f);
+  //speed = glm::vec3(Rand(-2.0f, 2.0f), Rand(-5.0f, -10.0f), 0.0f);
+  //rotation = glm::vec3(Rand(-PI, PI), Rand(-PI, PI), Rand(-PI, PI));
+  //rotMomentum = glm::vec3(Rand(-PI, PI), Rand(-PI, PI), Rand(-PI, PI));
 
   // Initialize static resources if needed
   if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
-  if (!texture) texture = TexturePtr(new Texture{"asteroid.rgb", 512, 512});
-  if (!mesh) mesh = MeshPtr(new Mesh{shader, "asteroid.obj"});
+  if (!texture) texture = TexturePtr(new Texture{"fence.rgb", 1024, 512});
+  if (!mesh) mesh = MeshPtr(new Mesh{shader, "fence.obj"});
 }
 
 Asteroid::~Asteroid() {
@@ -29,18 +29,18 @@ bool Asteroid::Update(Scene &scene, float dt) {
   age += dt;
 
   // Animate position according to time
-  position += speed * dt;
+  //position += speed * dt;
 
   // Rotate the object
-  rotation += rotMomentum * dt;
+  //rotation += rotMomentum * dt;
 
   // Delete when alive longer than 10s or out of visibility
-  if (age > 10.0f || position.y < -10) return false;
+  //if (age > 10.0f || position.y < -10) return false;
 
   // Collide with scene
-  for (auto obj : scene.objects) {
-    // Ignore self in scene
-    if (obj.get() == this) continue;
+//  for (auto obj : scene.objects) {
+//    // Ignore self in scene
+//    if (obj.get() == this) continue;
 
     // We only need to collide with asteroids and projectiles, ignore other objects
     //auto asteroid = std::dynamic_pointer_cast<Asteroid>(obj);
@@ -67,7 +67,7 @@ bool Asteroid::Update(Scene &scene, float dt) {
 //      // Destroy self
 //      return false;
 //    }
-  }
+// }
 
   // Generate modelMatrix from position, animateOn and scale
   GenerateModelMatrix();

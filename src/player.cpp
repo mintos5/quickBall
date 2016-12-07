@@ -3,6 +3,7 @@
 #include "asteroid.h"
 #include "object_frag.h"
 #include "object_vert.h"
+#include "fence.h"
 
 #include <GLFW/glfw3.h>
 
@@ -17,10 +18,24 @@ Player::Player() {
   // Scale the default model
   scale *= 3.0f;
 
+  //rotation = glm::vec3(0,0,1.0);
+
   // Initialize static resources if needed
   if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
-  if (!texture) texture = TexturePtr(new Texture{"corsair.rgb", 256, 512});
-  if (!mesh) mesh = MeshPtr(new Mesh{shader, "corsair.obj"});
+  if (!texture) texture = TexturePtr(new Texture{"sphere.rgb", 256, 256});
+  if (!mesh) mesh = MeshPtr(new Mesh{shader, "sphere.obj"});
+}
+
+Player::Player(CameraPtr cam){
+  this->camera = cam;
+  scale *= 3.0f;
+
+  //rotation = glm::vec3(0,0,1.0);
+
+  // Initialize static resources if needed
+  if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
+  if (!texture) texture = TexturePtr(new Texture{"sphere.rgb", 256, 256});
+  if (!mesh) mesh = MeshPtr(new Mesh{shader, "sphere.obj"});
 }
 
 Player::~Player() {
@@ -37,7 +52,7 @@ bool Player::Update(Scene &scene, float dt) {
       continue;
 
     // We only need to collide with asteroids, ignore other objects
-    auto asteroid = std::dynamic_pointer_cast<Asteroid>(obj);
+    auto asteroid = std::dynamic_pointer_cast<fence>(obj);
     if (!asteroid) continue;
 
     if (glm::distance(position, asteroid->position) < asteroid->scale.y) {
@@ -53,16 +68,27 @@ bool Player::Update(Scene &scene, float dt) {
   }
 
   // Keyboard controls
-  if(scene.keyboard[GLFW_KEY_LEFT]) {
-    position.x += 10 * dt;
-    rotation.z = -PI/4.0f;
-  } else if(scene.keyboard[GLFW_KEY_RIGHT]) {
-    position.x -= 10 * dt;
-    rotation.z = PI/4.0f;
-  } else {
-    rotation.z = 0;
+  if(scene.keyboard[GLFW_KEY_UP]) {
+    position.z -= 10 * dt;
+    rotation.x -= 0.15f;
+    this->camera->position.z -= 10 * dt;
+      //this->camera->Update(scene,0.0f);
   }
-
+    if(scene.keyboard[GLFW_KEY_DOWN]) {
+    position.z += 10 * dt;
+    rotation.x += 0.15f;
+    this->camera->position.z += 10 * dt;
+      //this->camera->Update(scene,0.0f);
+  }
+    if(scene.keyboard[GLFW_KEY_LEFT]) {
+        position.x -= 2 * dt;
+        rotation.y += 0.15f;
+    }
+    if(scene.keyboard[GLFW_KEY_RIGHT]) {
+        position.x += 2 * dt;
+        rotation.y -= 0.15f;
+    }
+  //std::cout << "positionZ: " << this->position.z << std::endl;
   // Firing projectiles
   if(scene.keyboard[GLFW_KEY_SPACE] && fireDelay > fireRate) {
     // Reset fire delay
@@ -84,6 +110,11 @@ void Player::Render(Scene &scene) {
 
   // use camera
   shader->SetMatrix(scene.camera->projectionMatrix, "ProjectionMatrix");
+  glm::vec3 up = glm::vec3(0,1,0);
+  glm::vec3 position2 = glm::vec3(0,0,0);
+  glm::vec3 front = glm::vec3(0,0,1);
+
+  glm::mat4 specialViewMatrix = glm::lookAt(position2, position2-front, up);
   shader->SetMatrix(scene.camera->viewMatrix, "ViewMatrix");
 
   // render mesh

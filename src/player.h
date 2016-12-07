@@ -6,6 +6,7 @@
 #include <mesh.h>
 
 #include "object.h"
+#include "camera.h"
 
 // Simple object representing the player
 // Reads keyboard status and manipulates its own position
@@ -13,6 +14,7 @@
 class Player : public Object {
 public:
   Player();
+  Player(CameraPtr cam);
   ~Player();
 
   bool Update(Scene &scene, float dt) override;
@@ -23,6 +25,7 @@ private:
   float fireDelay;
   float fireRate;
   glm::vec3 fireOffset;
+  CameraPtr camera;
 
   // Static resources (Shared between instances)
   static MeshPtr mesh;
