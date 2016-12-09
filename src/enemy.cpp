@@ -2,31 +2,31 @@
 // Created by michal on 7.12.2016.
 //
 
-#include "fence.h"
+#include "enemy.h"
 #include "object_frag.h"
 #include "object_vert.h"
 
-fence::fence() {
+enemy::enemy() {
     // Initialize static resources if needed
     if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
-    if (!texture) texture = TexturePtr(new Texture{"fence.rgb", 1024, 512});
-    if (!mesh) mesh = MeshPtr(new Mesh{shader, "fence.obj"});
-    this->scale = glm::vec3(0.4,0.4,0.4);
+    if (!texture) texture = TexturePtr(new Texture{"spider.rgb", 1024, 1024});
+    if (!mesh) mesh = MeshPtr(new Mesh{shader, "spider.obj"});
+    this->scale = glm::vec3(0.3,0.3,0.3);
     this->position.y = -1.1;
-    this->position.z = -2;
+    this->position.z = -3;
     this->position.x = 0;
 }
 
-fence::~fence() {
+enemy::~enemy() {
 
 }
 
-bool fence::Update(Scene &scene, float dt) {
+bool enemy::Update(Scene &scene, float dt) {
     GenerateModelMatrix();
     return true;
 }
 
-void fence::Render(Scene &scene) {
+void enemy::Render(Scene &scene) {
     shader->Use();
 
     // use camera
@@ -39,6 +39,6 @@ void fence::Render(Scene &scene) {
     mesh->Render();
 }
 // shared resources
-MeshPtr fence::mesh;
-ShaderPtr fence::shader;
-TexturePtr fence::texture;
+MeshPtr enemy::mesh;
+ShaderPtr enemy::shader;
+TexturePtr enemy::texture;

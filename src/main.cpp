@@ -20,6 +20,13 @@
 #include "ground.h"
 #include "asteroid.h"
 #include "fence.h"
+#include "portal.h"
+#include "heart.h"
+#include "enemy.h"
+#include "word.h"
+#include "test1.h"
+#include "titlescreen.h"
+#include "back.h"
 
 const unsigned int SIZE = 600;
 
@@ -30,7 +37,7 @@ void InitializeScene() {
   scene.objects.clear();
 
   // Create a camera
-  auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 100.0f});
+  auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 40.0f});
   //camera->position.z = -10.0f;
   scene.camera = camera;
 
@@ -41,20 +48,49 @@ void InitializeScene() {
   player->position.y = -0.8;
   player->position.z = -3;
     player->scale = glm::vec3(0.3,0.3,0.3);
-  scene.objects.push_back(player);
+  //scene.objects.push_back(player);
 
   //add test object
     auto test = GroundPtr(new ground{});
-    test->position.z = -32;
-    scene.objects.push_back(test);
+    test->position.z = -100;
+    //scene.objects.push_back(test);
 
-    auto object = FencePtr(new fence{});
-    object->scale = glm::vec3(0.4,0.4,0.4);
-    object->position.y = -1.1;
+    auto object = EnemyPtr(new enemy{});
+//    object->scale = glm::vec3(3,3,3);
+//    object->position.y = -5.7;
     object->position.z = -5;
-    object->position.x = 0;
-    scene.objects.push_back(object);
+    object->position.x = 1.0;
+//    object->rotation.z = PI;
+    //scene.objects.push_back(object);
 
+    auto object4 = PortalPtr(new portal{});
+    object4->position.z = -100;
+    object4->position.x = 1.0;
+    //scene.objects.push_back(object4);
+
+  auto background = BackPtr(new back{SIZE,SIZE});
+  //scene.objects.push_back(background);
+
+  //NEPOUZIVAT
+  //auto objectT = TitlePtr(new titlescreen{SIZE,SIZE});
+  //scene.objects.push_back(objectT);
+
+    auto objectOSD = WordPtr(new word{"Xww: ",20,50,0.7f,SIZE,SIZE});
+    scene.objects.push_back(objectOSD);
+
+  auto objectOSD2 = WordPtr(new word{"Yzz: ",20,500,0.7f,SIZE,SIZE});
+  scene.objects.push_back(objectOSD2);
+
+
+    auto object2 = HeartPtr(new heart{});
+    object2->position.z = -4;
+    object2->position.x = 1.0;
+    //scene.objects.push_back(object2);
+
+    auto object3 = FencePtr(new fence{});
+    object3->position.z = -4;
+    object3->position.x = 1.0;
+    //scene.objects.push_back(object3);
 }
 
 // Keyboard press event handler
@@ -74,6 +110,7 @@ void OnMouseMove(GLFWwindow* /* window */, double xpos, double ypos) {
 }
 
 int main() {
+    // vytvorit generator a spravanie hraca,
   // Initialize GLFW
   if (!glfwInit()) {
     std::cerr << "Failed to initialize GLFW!" << std::endl;
@@ -88,7 +125,7 @@ int main() {
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   // Try to create a window
-  auto window = glfwCreateWindow(SIZE, SIZE, "PPGSO gl_scene", nullptr, nullptr);
+  auto window = glfwCreateWindow(SIZE, SIZE, "QuickBall", nullptr, nullptr);
   if (!window) {
     std::cerr << "Failed to open GLFW window, your graphics card is probably only capable of OpenGL 2.1" << std::endl;
     glfwTerminate();
@@ -119,10 +156,13 @@ int main() {
   glDepthFunc(GL_LEQUAL);
 
   // Enable polygon culling
-    //TODO ask how to solve...
   glEnable(GL_CULL_FACE);
   glFrontFace(GL_CCW);
   glCullFace(GL_BACK);
+    // Set OpenGL options
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   InitializeScene();
 
@@ -135,8 +175,8 @@ int main() {
     float dt = (float)glfwGetTime() - time;
     time = (float)glfwGetTime();
 
-    // Set gray background
-    glClearColor(0.0f,0.0f,.9f,0);
+    // Set gray back
+    glClearColor(0.0f,0.0f,0.0f,0);
     // Clear depth and color buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

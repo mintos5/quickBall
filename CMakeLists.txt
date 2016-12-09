@@ -48,6 +48,8 @@ find_package(GLFW3 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLM REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(Freetype REQUIRED)
+include_directories(${FREETYPE_INCLUDE_DIRS})
 
 # Set default installation destination
 if (NOT CMAKE_INSTALL_PREFIX)
@@ -60,7 +62,8 @@ add_library(libppgso STATIC
         src/lib/tiny_obj_loader.cpp
         src/lib/shader.cpp
         src/lib/texture.cpp
-        src/lib/plane.cpp)
+        src/lib/plane.cpp
+        src/lib/texts.cpp)
 # Make sure GLM uses radians and static GLEW library
 target_compile_definitions(libppgso PUBLIC -DGLM_FORCE_RADIANS -DGLEW_STATIC )
 # Link to GLFW, GLEW and OpenGL
@@ -86,12 +89,17 @@ set(GL_GAME_SRC
         src/scene.cpp
         src/camera.cpp
         src/asteroid.cpp
-        src/player.cpp src/ground.cpp src/ground.h src/fence.cpp src/fence.h)
+        src/player.cpp src/ground.cpp src/ground.h src/fence.cpp src/fence.h src/enemy.cpp src/enemy.h src/heart.cpp src/heart.h src/portal.cpp src/portal.h src/titlescreen.cpp src/titlescreen.h src/word.cpp src/word.h src/test1.cpp src/test1.h src/back.cpp src/back.h)
 generate_shaders(GL_GAME_SHADERS
-        src/object_frag.glsl
-        src/object_vert.glsl)
+        src/glsl/object_frag.glsl
+        src/glsl/object_frag_mono.glsl
+        src/glsl/object_vert.glsl
+        src/glsl/text_vert.glsl
+        src/glsl/text_frag.glsl
+        src/glsl/back_vert.glsl
+        src/glsl/back_frag.glsl)
 add_executable(gl_quickball ${GL_GAME_SRC} ${GL_GAME_SHADERS})
-target_link_libraries(gl_quickball libppgso)
+target_link_libraries(gl_quickball libppgso ${FREETYPE_LIBRARIES})
 install(TARGETS gl_quickball DESTINATION .)
 
 # ADD YOUR PROJECT HERE

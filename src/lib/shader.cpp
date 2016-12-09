@@ -122,3 +122,5 @@ void Shader::SetVector(glm::vec4 vector, const std::string &name) {
   auto uniform = GetUniformLocation(name.c_str());
   glUniform4fv(uniform, 1, glm::value_ptr(vector));
 }
+
+

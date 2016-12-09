@@ -2,8 +2,8 @@
 // Created by michal on 7.12.2016.
 //
 
-#ifndef PPGSO_FENCE_H
-#define PPGSO_FENCE_H
+#ifndef PPGSO_PORTAL_H
+#define PPGSO_PORTAL_H
 
 
 #include <mesh.h>
@@ -12,11 +12,11 @@
 #include "object.h"
 #include "scene.h"
 
-class fence : public Object {
-public:
-    fence();
-    ~fence();
+class portal : public Object {
 
+public:
+    portal();
+    ~portal();
     // Implement object interface
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
@@ -27,6 +27,6 @@ private:
     static ShaderPtr shader;
     static TexturePtr texture;
 };
-typedef std::shared_ptr<fence> FencePtr;
+typedef std::shared_ptr<portal> PortalPtr;
 
-#endif //PPGSO_FENCE_H
+#endif //PPGSO_PORTAL_H

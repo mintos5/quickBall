@@ -1,32 +1,36 @@
 //
-// Created by michal on 7.12.2016.
+// Created by michal on 9.12.2016.
 //
 
-#ifndef PPGSO_FENCE_H
-#define PPGSO_FENCE_H
-
-
+#ifndef PPGSO_BACK_H
+#define PPGSO_BACK_H
 #include <mesh.h>
 #include <shader.h>
 #include <texture.h>
 #include "object.h"
 #include "scene.h"
 
-class fence : public Object {
+class back  : public Object {
 public:
-    fence();
-    ~fence();
+    GLuint vao;
+    GLuint vbo;
+
+    back(int sizeX, int sizeY);
+    ~back();
 
     // Implement object interface
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
 private:
-
+    void init();
+    glm::mat4 projection;
+    int sizeX;
+    int sizeY;
     // Static resources (Shared between instances)
-    static MeshPtr mesh;
     static ShaderPtr shader;
     static TexturePtr texture;
-};
-typedef std::shared_ptr<fence> FencePtr;
 
-#endif //PPGSO_FENCE_H
+};
+typedef std::shared_ptr<back> BackPtr;
+
+#endif //PPGSO_BACK_H

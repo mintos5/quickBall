@@ -13,7 +13,7 @@ enum animation_t {none,scale,rotate,squash,translate};
 
 class plane{
     GLuint vao;
-    GLuint vbo, tbo, nbo;
+    GLuint vbo, tbo;
     GLuint ibo;
     ShaderPtr program;
     std::vector<GLfloat> vertex_buffer;

@@ -2,8 +2,8 @@
 // Created by michal on 7.12.2016.
 //
 
-#ifndef PPGSO_FENCE_H
-#define PPGSO_FENCE_H
+#ifndef PPGSO_ENEMY_H
+#define PPGSO_ENEMY_H
 
 
 #include <mesh.h>
@@ -12,12 +12,11 @@
 #include "object.h"
 #include "scene.h"
 
-class fence : public Object {
+class enemy  : public Object {
 public:
-    fence();
-    ~fence();
+    enemy();
+    ~enemy();
 
-    // Implement object interface
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
 private:
@@ -27,6 +26,6 @@ private:
     static ShaderPtr shader;
     static TexturePtr texture;
 };
-typedef std::shared_ptr<fence> FencePtr;
+typedef std::shared_ptr<enemy> EnemyPtr;
 
-#endif //PPGSO_FENCE_H
+#endif //PPGSO_ENEMY_H

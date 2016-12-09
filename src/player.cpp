@@ -34,7 +34,7 @@ Player::Player(CameraPtr cam){
 
   // Initialize static resources if needed
   if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
-  if (!texture) texture = TexturePtr(new Texture{"sphere.rgb", 256, 256});
+  if (!texture) texture = TexturePtr(new Texture{"lopta.rgb", 1024, 512});
   if (!mesh) mesh = MeshPtr(new Mesh{shader, "sphere.obj"});
 }
 
@@ -69,15 +69,15 @@ bool Player::Update(Scene &scene, float dt) {
 
   // Keyboard controls
   if(scene.keyboard[GLFW_KEY_UP]) {
-    position.z -= 10 * dt;
+    position.z -= 5 * dt;
     rotation.x -= 0.15f;
-    this->camera->position.z -= 10 * dt;
+    this->camera->position.z -= 5 * dt;
       //this->camera->Update(scene,0.0f);
   }
     if(scene.keyboard[GLFW_KEY_DOWN]) {
-    position.z += 10 * dt;
+    position.z += 5 * dt;
     rotation.x += 0.15f;
-    this->camera->position.z += 10 * dt;
+    this->camera->position.z += 5 * dt;
       //this->camera->Update(scene,0.0f);
   }
     if(scene.keyboard[GLFW_KEY_LEFT]) {
@@ -101,6 +101,7 @@ bool Player::Update(Scene &scene, float dt) {
 //    scene.objects.push_back(projectile);
   }
 
+  //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
   GenerateModelMatrix();
   return true;
 }

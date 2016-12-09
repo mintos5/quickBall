@@ -2,9 +2,8 @@
 // Created by michal on 7.12.2016.
 //
 
-#ifndef PPGSO_FENCE_H
-#define PPGSO_FENCE_H
-
+#ifndef PPGSO_HEART_H
+#define PPGSO_HEART_H
 
 #include <mesh.h>
 #include <shader.h>
@@ -12,12 +11,11 @@
 #include "object.h"
 #include "scene.h"
 
-class fence : public Object {
+class heart : public Object {
 public:
-    fence();
-    ~fence();
+    heart();
+    ~heart();
 
-    // Implement object interface
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
 private:
@@ -27,6 +25,6 @@ private:
     static ShaderPtr shader;
     static TexturePtr texture;
 };
-typedef std::shared_ptr<fence> FencePtr;
+typedef std::shared_ptr<heart> HeartPtr;
 
-#endif //PPGSO_FENCE_H
+#endif //PPGSO_HEART_H
