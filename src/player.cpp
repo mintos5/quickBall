@@ -42,6 +42,7 @@ Player::~Player() {
 }
 
 bool Player::Update(Scene &scene, float dt) {
+  //TODO do sceny posielat gameStatus playerStatus,pridat tu zrychlovanie lopticky...
   // Fire delay increment
   fireDelay += dt;
 
@@ -102,6 +103,7 @@ bool Player::Update(Scene &scene, float dt) {
   }
 
   //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
+  scene.position.z = this->position.z;
   GenerateModelMatrix();
   return true;
 }

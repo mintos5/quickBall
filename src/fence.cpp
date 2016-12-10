@@ -6,6 +6,8 @@
 #include "object_frag.h"
 #include "object_vert.h"
 
+#define OUT 3.0f
+
 fence::fence() {
     // Initialize static resources if needed
     if (!shader) shader = ShaderPtr(new Shader{object_vert, object_frag});
@@ -23,6 +25,9 @@ fence::~fence() {
 
 bool fence::Update(Scene &scene, float dt) {
     GenerateModelMatrix();
+    if (this->position.z > scene.position.z+OUT){
+        return false;
+    }
     return true;
 }
 

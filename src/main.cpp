@@ -27,13 +27,17 @@
 #include "test1.h"
 #include "titlescreen.h"
 #include "back.h"
+#include "generator.h"
+
+#define DEF_LIVES 3
 
 const unsigned int SIZE = 600;
-
+int currentLevel = 1;
 Scene scene;
 
+
 // Set up the scene
-void InitializeScene() {
+void InitializeScene(int lives,int level) {
   scene.objects.clear();
 
   // Create a camera
@@ -48,12 +52,12 @@ void InitializeScene() {
   player->position.y = -0.8;
   player->position.z = -3;
     player->scale = glm::vec3(0.3,0.3,0.3);
-  //scene.objects.push_back(player);
+  scene.objects.push_back(player);
 
   //add test object
     auto test = GroundPtr(new ground{});
     test->position.z = -100;
-    //scene.objects.push_back(test);
+    scene.objects.push_back(test);
 
     auto object = EnemyPtr(new enemy{});
 //    object->scale = glm::vec3(3,3,3);
@@ -69,7 +73,7 @@ void InitializeScene() {
     //scene.objects.push_back(object4);
 
   auto background = BackPtr(new back{SIZE,SIZE});
-  //scene.objects.push_back(background);
+  scene.objects.push_back(background);
 
   //NEPOUZIVAT
   //auto objectT = TitlePtr(new titlescreen{SIZE,SIZE});
@@ -91,6 +95,9 @@ void InitializeScene() {
     object3->position.z = -4;
     object3->position.x = 1.0;
     //scene.objects.push_back(object3);
+
+    auto gene = GeneratorPtr(new generator{player});
+    scene.objects.push_back(gene);
 }
 
 // Keyboard press event handler
@@ -99,7 +106,7 @@ void OnKeyPress(GLFWwindow* /* window */, int key, int /* scancode */, int actio
 
   // Reset
   if (key == GLFW_KEY_R && action == GLFW_PRESS) {
-    InitializeScene();
+    InitializeScene(DEF_LIVES,0);
   }
 }
 
@@ -164,7 +171,7 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  InitializeScene();
+  InitializeScene(DEF_LIVES,0);
 
   // Track time
   float time = (float)glfwGetTime();
@@ -181,9 +188,17 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Update and render all objects
-    scene.Update(dt);
+    int up = scene.Update(dt);
     scene.Render();
-
+      if (up==0){//NORMAL
+          ;
+      }
+      if (up==-1){//GAME OVER
+          InitializeScene(DEF_LIVES,-1);
+      }
+      if (up==-1){//NEXT LEVEL
+          InitializeScene(scene.playerStatus,++currentLevel);
+      }
     // Display result
     glfwSwapBuffers(window);
     glfwPollEvents();

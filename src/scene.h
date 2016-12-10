@@ -17,11 +17,14 @@ class Scene {
     ~Scene();
 
     // Animate all objects in scene
-    void Update(float time);
+    int Update(float time);
     // Render all objects in scene
     void Render();
 
     CameraPtr camera;
+    glm::vec3 position;
+    int gameStatus = 0;
+    int playerStatus;
     std::list< ObjectPtr > objects;
     std::map< int, int > keyboard;
     struct {

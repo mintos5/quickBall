@@ -89,7 +89,7 @@ set(GL_GAME_SRC
         src/scene.cpp
         src/camera.cpp
         src/asteroid.cpp
-        src/player.cpp src/ground.cpp src/ground.h src/fence.cpp src/fence.h src/enemy.cpp src/enemy.h src/heart.cpp src/heart.h src/portal.cpp src/portal.h src/titlescreen.cpp src/titlescreen.h src/word.cpp src/word.h src/test1.cpp src/test1.h src/back.cpp src/back.h)
+        src/player.cpp src/ground.cpp src/ground.h src/fence.cpp src/fence.h src/enemy.cpp src/enemy.h src/heart.cpp src/heart.h src/portal.cpp src/portal.h src/titlescreen.cpp src/titlescreen.h src/word.cpp src/word.h src/test1.cpp src/test1.h src/back.cpp src/back.h src/generator.cpp src/generator.h)
 generate_shaders(GL_GAME_SHADERS
         src/glsl/object_frag.glsl
         src/glsl/object_frag_mono.glsl

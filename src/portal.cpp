@@ -23,6 +23,7 @@ portal::~portal() {
 }
 
 bool portal::Update(Scene &scene, float dt) {
+    //TODO do sceny posielat gameStatus
     GenerateModelMatrix();
     return true;
 }
