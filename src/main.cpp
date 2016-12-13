@@ -28,6 +28,8 @@
 #include "titlescreen.h"
 #include "back.h"
 #include "generator.h"
+#include "combined.h"
+#include "enemyAnimate.h"
 
 #define DEF_LIVES 3
 
@@ -65,7 +67,7 @@ void InitializeScene(int lives,int level) {
     object->position.z = -5;
     object->position.x = 1.0;
 //    object->rotation.z = PI;
-    //scene.objects.push_back(object);
+    scene.objects.push_back(object);
 
     auto object4 = PortalPtr(new portal{});
     object4->position.z = -100;
@@ -89,7 +91,7 @@ void InitializeScene(int lives,int level) {
     auto object2 = HeartPtr(new heart{});
     object2->position.z = -4;
     object2->position.x = 1.0;
-    //scene.objects.push_back(object2);
+    scene.objects.push_back(object2);
 
     auto object3 = FencePtr(new fence{});
     object3->position.z = -4;
@@ -97,7 +99,12 @@ void InitializeScene(int lives,int level) {
     //scene.objects.push_back(object3);
 
     auto gene = GeneratorPtr(new generator{player});
-    scene.objects.push_back(gene);
+    //scene.objects.push_back(gene);
+
+    auto combi = CombiPtr(new combined{});
+  //scene.objects.push_back(combi);
+    auto animacny = EnemyAnimPtr(new enemyAnimate{});
+    scene.objects.push_back(animacny);
 }
 
 // Keyboard press event handler

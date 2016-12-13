@@ -78,6 +78,7 @@ void generator::generateEnemy(Scene &scene, int where) {
             break;
         case CENTER: spider->position.x = 0.0f;
     }
+    spider->setWorldPosition(spider->position);
     scene.objects.push_back(spider);
 }
 

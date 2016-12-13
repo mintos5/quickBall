@@ -14,12 +14,16 @@
 class heart : public Object {
 public:
     heart();
+
+    heart(bool combiAnimation);
+
     ~heart();
 
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
 private:
-
+    bool combiAnimation = false;
+    float lifeTime = 0.0f;
     // Static resources (Shared between instances)
     static MeshPtr mesh;
     static ShaderPtr shader;

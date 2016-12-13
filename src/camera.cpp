@@ -14,7 +14,7 @@ Camera::Camera(float fow, float ratio, float near, float far) {
   projectionMatrix = glm::perspective(fowInRad, ratio, near, far);
 
   up = glm::vec3(0,1,0);
-  position = glm::vec3(0,0,0);
+  position = glm::vec3(0,0,-1.0);
   front = glm::vec3(0,0,1);
     translation = glm::vec3(0,0,0);
 
