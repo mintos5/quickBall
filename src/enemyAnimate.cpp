@@ -18,6 +18,7 @@ enemyAnimate::enemyAnimate() {
     this->position.x = 0;
     this->worldPosition = this->position;
     mesh->setKeyFrame(1);
+    //mesh->setStartFrame(2);
     //this->rotation.z = PI/2;
 }
 
@@ -53,17 +54,25 @@ bool enemyAnimate::Update(Scene &scene, float dt) {
     else {
         //this->position.x = this->worldPosition.x + sin(lifeTime)*0.4;
     }
+    shader->Use();
     shader->SetFloat(std::abs(sin(lifeTime*2.0)),"TweenFactor");
     if (animationCount < lifeTime/(PI/2.0)){
         animationCount++;
     }
-    //std::cout << animationCount << std::endl;
     if (animationCount%2==0){
         mesh->setKeyFrame(1);
     } else {
         mesh->setKeyFrame(2);
     }
-    //mesh->setKeyFrame(1);
+    if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
+        std::cout << "enemyA" << std::endl;
+        scene.playerStatus--;
+        return false;
+    }
+
+    if (this->position.z > scene.position.z+scene.OUT){
+        return false;
+    }
     GenerateModelMatrix();
     return true;
 }

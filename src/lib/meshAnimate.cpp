@@ -158,6 +158,12 @@ void MeshAnimate::setKeyFrame(int num) {
                  vertexVector[num].data(), GL_STATIC_DRAW);
 }
 
+void MeshAnimate::setStartFrame(int num) {
+    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertexVector[num].size() * sizeof(GLfloat),
+                 vertexVector[num].data(), GL_STATIC_DRAW);
+}
+
 void MeshAnimate::Render() {
   // Draw object
   glBindVertexArray(this->vao);

@@ -6,7 +6,6 @@
 #include "object_frag.h"
 #include "object_vert.h"
 
-#define OUT 3.0f
 
 fence::fence() {
     // Initialize static resources if needed
@@ -24,10 +23,15 @@ fence::~fence() {
 }
 
 bool fence::Update(Scene &scene, float dt) {
-    GenerateModelMatrix();
-    if (this->position.z > scene.position.z+OUT){
+    if (this->position.z > scene.position.z+scene.OUT){
         return false;
     }
+    if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
+        std::cout << "fence" << std::endl;
+        scene.playerStatus--;
+        return false;
+    }
+    GenerateModelMatrix();
     return true;
 }
 

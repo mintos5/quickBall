@@ -18,14 +18,11 @@
 #include "camera.h"
 #include "player.h"
 #include "ground.h"
-#include "asteroid.h"
 #include "fence.h"
 #include "portal.h"
 #include "heart.h"
 #include "enemy.h"
 #include "word.h"
-#include "test1.h"
-#include "titlescreen.h"
 #include "back.h"
 #include "generator.h"
 #include "combined.h"
@@ -33,7 +30,7 @@
 
 #define DEF_LIVES 3
 
-const unsigned int SIZE = 600;
+const unsigned int SIZE = 700;
 int currentLevel = 1;
 Scene scene;
 
@@ -55,6 +52,7 @@ void InitializeScene(int lives,int level) {
   player->position.z = -3;
     player->scale = glm::vec3(0.3,0.3,0.3);
   scene.objects.push_back(player);
+  scene.player = player;
 
   //add test object
     auto test = GroundPtr(new ground{});
@@ -67,7 +65,7 @@ void InitializeScene(int lives,int level) {
     object->position.z = -5;
     object->position.x = 1.0;
 //    object->rotation.z = PI;
-    scene.objects.push_back(object);
+    //scene.objects.push_back(object);
 
     auto object4 = PortalPtr(new portal{});
     object4->position.z = -100;
@@ -77,34 +75,35 @@ void InitializeScene(int lives,int level) {
   auto background = BackPtr(new back{SIZE,SIZE});
   scene.objects.push_back(background);
 
-  //NEPOUZIVAT
-  //auto objectT = TitlePtr(new titlescreen{SIZE,SIZE});
-  //scene.objects.push_back(objectT);
-
     auto objectOSD = WordPtr(new word{"Xww: ",20,50,0.7f,SIZE,SIZE});
     scene.objects.push_back(objectOSD);
 
-  auto objectOSD2 = WordPtr(new word{"Yzz: ",20,500,0.7f,SIZE,SIZE});
+  auto objectOSD2 = WordPtr(new word{"Yzz: ",20,(SIZE/10)*9,0.7f,SIZE,SIZE});
+  objectOSD2->setChangeable(true);
   scene.objects.push_back(objectOSD2);
 
 
     auto object2 = HeartPtr(new heart{});
     object2->position.z = -4;
     object2->position.x = 1.0;
-    scene.objects.push_back(object2);
-
-    auto object3 = FencePtr(new fence{});
-    object3->position.z = -4;
-    object3->position.x = 1.0;
-    //scene.objects.push_back(object3);
+    //scene.objects.push_back(object2);
 
     auto gene = GeneratorPtr(new generator{player});
-    //scene.objects.push_back(gene);
+    scene.objects.push_back(gene);
 
     auto combi = CombiPtr(new combined{});
-  //scene.objects.push_back(combi);
+    //scene.objects.push_back(combi);
     auto animacny = EnemyAnimPtr(new enemyAnimate{});
-    scene.objects.push_back(animacny);
+    //scene.objects.push_back(animacny);
+    auto animacny2 = EnemyAnimPtr(new enemyAnimate{});
+    animacny2->position.z = -6.0f;
+    //scene.objects.push_back(animacny2);
+
+  auto object3 = FencePtr(new fence{});
+  object3->position.z = -3;
+  object3->position.x = 1.0;
+  //scene.objects.push_back(object3);
+  scene.playerStatus = 4;
 }
 
 // Keyboard press event handler
@@ -197,6 +196,7 @@ int main() {
     // Update and render all objects
     int up = scene.Update(dt);
     scene.Render();
+    std::cout << scene.playerStatus << std::endl;
       if (up==0){//NORMAL
           ;
       }

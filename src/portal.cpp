@@ -23,7 +23,10 @@ portal::~portal() {
 }
 
 bool portal::Update(Scene &scene, float dt) {
-    //TODO do sceny posielat gameStatus
+    if (glm::distance(position, scene.player->position) < 0.8f) {
+        scene.gameStatus = scene.NEXT_LEVEL;
+        return false;
+    }
     GenerateModelMatrix();
     return true;
 }

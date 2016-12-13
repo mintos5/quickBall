@@ -51,6 +51,14 @@ bool enemy::Update(Scene &scene, float dt) {
         this->position.x = this->worldPosition.x + sin(lifeTime)*0.4;
 
     }
+    if (this->position.z > scene.position.z+scene.OUT){
+        return false;
+    }
+    if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
+        std::cout << "enemy" << std::endl;
+        scene.playerStatus--;
+        return false;
+    }
     GenerateModelMatrix();
     return true;
 }

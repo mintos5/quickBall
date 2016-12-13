@@ -16,9 +16,15 @@ combined::~combined() {
 
 bool combined::Update(Scene &scene, float dt) {
     this->heartPtr->position = this->position;
-    this->heartPtr->Update(scene,dt);
+    bool test1 = this->heartPtr->Update(scene,dt);
     this->enemyPtr->setWorldPosition(this->heartPtr->position);
-    this->enemyPtr->Update(scene,dt);
+    bool test2 = this->enemyPtr->Update(scene,dt);
+    if (this->position.z > scene.position.z+scene.OUT){
+        return false;
+    }
+    if (test1 == false || test2 == false){
+        return false;
+    }
     return true;
 }
 

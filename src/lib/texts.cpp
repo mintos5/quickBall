@@ -131,3 +131,7 @@ void texts::render(float x,float y,float scale) {
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void texts::setWords(const std::string &words) {
+    texts::words = words;
+}

@@ -11,13 +11,17 @@
 
 class generator  : public Object {
 public:
-    int maxLives = 2;
-    int curLives = 0;
     generator(const PlayerPtr &player);
     ~generator();
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
-
+    struct objectsCount{
+        int max;
+        int cur = 0;
+    };
+    objectsCount lives;
+    objectsCount extraLive;
+    bool onePortal = true;
 private:
     PlayerPtr player;
     std::vector<int> genVector;
@@ -29,6 +33,8 @@ private:
     void generateFence(Scene &scene, int where);
     void generateHeart(Scene &scene, int where);
     void generatePortal(Scene &scene);
+    void generateSuperEnemy(Scene &scene, int where);
+    void generaSuperteHeart(Scene &scene, int where);
 };
 typedef std::shared_ptr<generator> GeneratorPtr;
 

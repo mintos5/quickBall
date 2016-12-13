@@ -31,6 +31,7 @@ public:
   void Render();
   int countKeyFrame();
   void setKeyFrame(int num);
+  void setStartFrame(int num);
 };
 typedef std::shared_ptr< MeshAnimate > MeshAnimatePtr;
 

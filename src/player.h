@@ -21,10 +21,6 @@ public:
   void Render(Scene &scene) override;
 
 private:
-  // Delay fire and fire rate
-  float fireDelay;
-  float fireRate;
-  glm::vec3 fireOffset;
   CameraPtr camera;
 
   // Static resources (Shared between instances)

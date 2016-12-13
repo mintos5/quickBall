@@ -35,6 +35,18 @@ bool heart::Update(Scene &scene, float dt) {
     if (this->combiAnimation){
         this->position.x = sin(lifeTime)*0.3f;
     }
+
+    if (this->position.z > scene.position.z+scene.OUT){
+        return false;
+    }
+    glm::vec3 groundPosition = this->position;
+    groundPosition.y = 0.0f;
+    if (glm::distance(groundPosition, scene.player->position) < 0.9f) {
+        std::cout << "heart" << std::endl;
+        scene.playerStatus++;
+        return false;
+    }
+
     GenerateModelMatrix();
     return true;
 }

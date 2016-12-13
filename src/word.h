@@ -13,12 +13,16 @@ public:
     ~word();
     bool Update(Scene &scene, float dt) override;
     void Render(Scene &scene) override;
+
+    void setChangeable(bool changeable);
+
 private:
     int sizeX;
     int sizeY;
     int x;
     int y;
     float scale;
+    bool changeable = false;
     // Static resources (Shared between instances)
     TextPtr textR;
     static ShaderPtr shader;

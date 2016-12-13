@@ -24,7 +24,12 @@ class Scene {
     CameraPtr camera;
     glm::vec3 position;
     int gameStatus = 0;
+    const int NEXT_LEVEL = 1;
+    const int GAME_OVER = 0;
+    const float OUT = 3.0f;
+    const float MIN_LENGHT = 0.4f;
     int playerStatus;
+    ObjectPtr player;
     std::list< ObjectPtr > objects;
     std::map< int, int > keyboard;
     struct {

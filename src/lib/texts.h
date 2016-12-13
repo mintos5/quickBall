@@ -34,6 +34,7 @@ class texts {
 public:
     texts(ShaderPtr program,std::string text);
     void render(float x,float y,float scale);
+    void setWords(const std::string &words);
 };
 typedef std::shared_ptr<texts> TextPtr;
 

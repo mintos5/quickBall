@@ -1,19 +1,15 @@
 #include "player.h"
 #include "scene.h"
-#include "asteroid.h"
 #include "object_frag.h"
 #include "object_vert.h"
 #include "fence.h"
+#include "enemy.h"
+#include "enemyAnimate.h"
+#include "heart.h"
 
 #include <GLFW/glfw3.h>
 
 Player::Player() {
-  // Reset fire delay
-  fireDelay = 0;
-  // Set the rate of fire
-  fireRate = 0.3f;
-  // Fire offset;
-  fireOffset = glm::vec3(0.7f,0.0f,0.0f);
 
   // Scale the default model
   scale *= 3.0f;
@@ -42,45 +38,25 @@ Player::~Player() {
 }
 
 bool Player::Update(Scene &scene, float dt) {
-  //TODO do sceny posielat gameStatus playerStatus,pridat tu zrychlovanie lopticky...
-  // Fire delay increment
-  fireDelay += dt;
-
-  // Hit detection
-  for ( auto obj : scene.objects ) {
-    // Ignore self in scene
-    if (obj.get() == this)
-      continue;
-
-    // We only need to collide with asteroids, ignore other objects
-    auto asteroid = std::dynamic_pointer_cast<fence>(obj);
-    if (!asteroid) continue;
-
-    if (glm::distance(position, asteroid->position) < asteroid->scale.y) {
-      // Explode
-//      auto explosion = ExplosionPtr(new Explosion{});
-//      explosion->position = position;
-//      explosion->scale = scale * 3.0f;
-//      scene.objects.push_back(explosion);
-
-      // Die
-      return false;
+    //TODO do sceny posielat gameStatus playerStatus,pridat tu zrychlovanie lopticky.
+    //How much lives I have?
+    if (scene.playerStatus<=0){
+        scene.gameStatus = scene.GAME_OVER;
+        return false;
     }
-  }
-
-  // Keyboard controls
-  if(scene.keyboard[GLFW_KEY_UP]) {
-    position.z -= 5 * dt;
-    rotation.x -= 0.15f;
-    this->camera->position.z -= 5 * dt;
-      //this->camera->Update(scene,0.0f);
-  }
+    // Keyboard controls
+    if(scene.keyboard[GLFW_KEY_UP]) {
+        position.z -= 5 * dt;
+        rotation.x -= 0.15f;
+        this->camera->position.z -= 5 * dt;
+        //this->camera->Update(scene,0.0f);
+    }
     if(scene.keyboard[GLFW_KEY_DOWN]) {
-    position.z += 5 * dt;
-    rotation.x += 0.15f;
-    this->camera->position.z += 5 * dt;
-      //this->camera->Update(scene,0.0f);
-  }
+        position.z += 5 * dt;
+        rotation.x += 0.15f;
+        this->camera->position.z += 5 * dt;
+        //this->camera->Update(scene,0.0f);
+    }
     if(scene.keyboard[GLFW_KEY_LEFT]) {
         position.x -= 2 * dt;
         rotation.y += 0.15f;
@@ -89,23 +65,14 @@ bool Player::Update(Scene &scene, float dt) {
         position.x += 2 * dt;
         rotation.y -= 0.15f;
     }
-  //std::cout << "positionZ: " << this->position.z << std::endl;
-  // Firing projectiles
-  if(scene.keyboard[GLFW_KEY_SPACE] && fireDelay > fireRate) {
-    // Reset fire delay
-    fireDelay = 0;
-    // Invert file offset
-    fireOffset = -fireOffset;
+    //std::cout << "positionZ: " << this->position.z << std::endl;
 
-//    auto projectile = ProjectilePtr(new Projectile{});
-//    projectile->position = position + glm::vec3(0.0f, 0.0f, 0.3f) + fireOffset;
-//    scene.objects.push_back(projectile);
-  }
+    //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
 
-  //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
-  scene.position.z = this->position.z;
-  GenerateModelMatrix();
-  return true;
+    //sending destructor location
+    scene.position.z = this->position.z;
+    GenerateModelMatrix();
+    return true;
 }
 
 void Player::Render(Scene &scene) {
