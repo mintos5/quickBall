@@ -35,7 +35,7 @@ bool heart::Update(Scene &scene, float dt) {
     if (this->combiAnimation){
         this->position.x = sin(lifeTime)*0.3f;
     }
-
+    //out of sceen
     if (this->position.z > scene.position.z+scene.OUT){
         return false;
     }
@@ -46,7 +46,6 @@ bool heart::Update(Scene &scene, float dt) {
         scene.playerStatus++;
         return false;
     }
-
     GenerateModelMatrix();
     return true;
 }

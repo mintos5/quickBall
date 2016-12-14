@@ -11,6 +11,7 @@
 #include "enemyAnimate.h"
 
 #define BUFFER 30.0f
+#define GAP 3.0f
 #define LEFT 1
 #define CENTER 2
 #define RIGHT 3
@@ -50,8 +51,8 @@ bool generator::Update(Scene &scene, float dt) {
     //While until is generator moved to front
     while (position.z>=player->position.z-BUFFER){
         //if enables jumps
-        if ( (player->position.z-BUFFER) - position.z<=-3.0f && position.z >= GEN_LENGHT){
-            position.z -= 3.0f;
+        if ( (player->position.z-BUFFER) - position.z<=-GAP && position.z >= GEN_LENGHT){
+            position.z -= GAP;
             int arrayPos = uni1(rng);
             int location = uni2(rng);
             //Generate second object different

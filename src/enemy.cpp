@@ -38,10 +38,6 @@ enemy::~enemy() {
 
 bool enemy::Update(Scene &scene, float dt) {
     lifeTime += dt;
-//    this->position.x = this->worldPosition.x + sin(lifeTime)*0.7;
-//    this->position.z = this->worldPosition.z + cos(lifeTime)*0.7;
-//    this->rotation.z = (PI/2)*sin(lifeTime)*0.7;
-    //this->rotation.z = sin(lifeTime);
     if (this->combiAnimation) {
         this->position.x = this->worldPosition.x + sin(lifeTime)*0.7;
         this->position.z = this->worldPosition.z + cos(lifeTime)*0.7;
@@ -72,6 +68,7 @@ bool enemy::Update(Scene &scene, float dt) {
         }
 
     }
+    //out of sceen
     if (this->position.z > scene.position.z+scene.OUT){
         return false;
     }

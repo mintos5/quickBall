@@ -60,14 +60,13 @@ bool enemyAnimate::Update(Scene &scene, float dt) {
     } else {
         mesh->setKeyFrame(2);
     }
-
+    //out of sceen
+    if (this->position.z > scene.position.z+scene.OUT){
+        return false;
+    }
     if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
         std::cout << "enemyA" << std::endl;
         scene.playerStatus -= 2;
-        return false;
-    }
-
-    if (this->position.z > scene.position.z+scene.OUT){
         return false;
     }
     GenerateModelMatrix();

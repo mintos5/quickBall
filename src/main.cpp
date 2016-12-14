@@ -1,10 +1,6 @@
-// Example gl_scene
-// - Demonstrates the concept of a scene
-// - Uses abstract object interface for Update and Render steps
-// - Creates a simple game scene with Player, Asteroid and Space objects
-// - Contains a generator object that does not render but adds Asteroids to the scene
-// - Some objects use shared resources and all object deallocations are handled automatically
-// - Controls: LEFT, RIGHT, "R" to reset, SPACE to fire
+// quickBall
+// Can you move small ball to soccer goal?
+// - Controls: LEFT, RIGHT, "R" to reset, ENTER to continue
 
 #include <iostream>
 #include <vector>
@@ -112,65 +108,6 @@ void InitializeScene(int level) {
         objectOSD2->setChangeable(true);
         scene.objects.push_back(objectOSD2);
     }
-
-
-    /*// Create a camera
-    auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 40.0f});
-    //camera->position.z = -10.0f;
-    scene.camera = camera;
-
-    // Add generator to scene
-
-    // Add player to the scene
-    auto player = PlayerPtr(new Player{camera});
-    player->position.y = -0.8;
-    player->position.z = -3;
-    scene.objects.push_back(player);
-    scene.player = player;
-    scene.playerStatus = lives;
-
-    //add test object
-    auto test = GroundPtr(new ground{});
-    test->position.z = -100;
-    scene.objects.push_back(test);
-
-    auto object = EnemyPtr(new enemy{});
-    object->position.z = -5;
-    object->position.x = 0.0;
-    //scene.objects.push_back(object);
-
-    auto object4 = PortalPtr(new portal{});
-    object4->position.z = -100;
-    object4->position.x = 1.0;
-    //scene.objects.push_back(object4);
-
-    auto background = BackPtr(new back{SIZE,SIZE});
-    scene.objects.push_back(background);
-
-    auto objectOSD = WordPtr(new word{"Xww: ",20,50,0.7f,SIZE,SIZE});
-    scene.objects.push_back(objectOSD);
-
-    auto objectOSD2 = WordPtr(new word{"",20,(SIZE/10)*9,0.7f,SIZE,SIZE});
-    objectOSD2->setChangeable(true);
-    scene.objects.push_back(objectOSD2);
-
-
-    auto object2 = HeartPtr(new heart{});
-    object2->position.z = -4;
-    //scene.objects.push_back(object2);
-
-    auto gene = GeneratorPtr(new generator{player});
-    scene.objects.push_back(gene);
-
-    auto combi = CombiPtr(new combined{});
-    //scene.objects.push_back(combi);
-    auto animacny = EnemyAnimPtr(new enemyAnimate{});
-    //scene.objects.push_back(animacny);
-
-    auto object3 = FencePtr(new fence{});
-    object3->position.z = -3;
-    //scene.objects.push_back(object3);*/
-
 }
 
 // Keyboard press event handler

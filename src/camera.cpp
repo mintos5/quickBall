@@ -36,8 +36,6 @@ void Camera::Update(Scene &scene, float dt) {
     } else if(scene.keyboard[GLFW_KEY_S]){
         position.z += 10 * dt;
     }
-//    rotation = glm::vec3(0.0,0.0,0.0);
-//    viewMatrix = glm::translate(viewMatrix, translation);
-//    viewMatrix = viewMatrix * glm::orientate4(rotation);
+
     viewMatrix = glm::lookAt(position, position-front, up);
 }

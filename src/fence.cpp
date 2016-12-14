@@ -23,6 +23,7 @@ fence::~fence() {
 }
 
 bool fence::Update(Scene &scene, float dt) {
+    //out of sceen
     if (this->position.z > scene.position.z+scene.OUT){
         return false;
     }
