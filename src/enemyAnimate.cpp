@@ -63,7 +63,7 @@ bool enemyAnimate::Update(Scene &scene, float dt) {
 
     if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
         std::cout << "enemyA" << std::endl;
-        scene.playerStatus--;
+        scene.playerStatus -= 2;
         return false;
     }
 

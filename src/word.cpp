@@ -22,11 +22,10 @@ word::word(std::string text,int x,int y,float scale,int sizeX,int sizeY) {
 word::~word() {}
 
 bool word::Update(Scene &scene, float dt) {
-    textR->setWords(textString);
     if (changeable){
         std::stringstream ss;
         ss << "LIVES: " << scene.playerStatus;
-        textR->setWords(ss.str());
+        textString = ss.str();
     }
     return true;
 }
@@ -38,6 +37,7 @@ void word::Render(Scene &scene) {
     //TODO dostat tu spravnu velkost okna
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(sizeX), 0.0f, static_cast<GLfloat>(sizeY));
     shader->SetMatrix(projection,"projection");
+    textR->setWords(textString);
     textR->render(this->x,this->y,this->scale);
 }
 

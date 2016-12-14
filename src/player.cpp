@@ -38,7 +38,7 @@ Player::~Player() {
 }
 
 bool Player::Update(Scene &scene, float dt) {
-    //TODO do sceny posielat gameStatus playerStatus,pridat tu zrychlovanie lopticky.
+    this->lifeTime +=dt;
     //How much lives I have?
     if (scene.playerStatus<=0){
         scene.gameStatus = scene.GAME_OVER;
@@ -58,17 +58,33 @@ bool Player::Update(Scene &scene, float dt) {
         //this->camera->Update(scene,0.0f);
     }
     if(scene.keyboard[GLFW_KEY_LEFT]) {
-        position.x -= turningSpeed * dt;
-        rotation.y += 0.15f;
+        if (position.x > -0.7f){
+            position.x -= turningSpeed * dt;
+            rotation.y += 0.15f;
+        }
     }
     if(scene.keyboard[GLFW_KEY_RIGHT]) {
-        position.x += turningSpeed * dt;
-        rotation.y -= 0.15f;
+        if (position.x < 0.7f){
+            position.x += turningSpeed * dt;
+            rotation.y -= 0.15f;
+        }
     }
-    //std::cout << "positionZ: " << this->position.z << std::endl;
-
-    //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
-    position.z -= this->speed * dt;
+    if(scene.keyboard[GLFW_KEY_P]) {
+        if (this->lifeTime > this->pausedTimer+0.5f){
+            this->pausedTimer = this->lifeTime;
+            if (paused){
+                paused = false;
+            }
+            else{
+                paused = true;
+            }
+        }
+    }
+    if(!paused){
+        position.z -= this->speed * dt;
+        rotation.x -= 0.15f;
+        this->camera->position.z -= this->speed * dt;
+    }
 
     //sending destructor location
     scene.position.z = this->position.z;

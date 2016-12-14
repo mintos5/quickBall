@@ -6,5 +6,5 @@ uniform sampler2D tex;
 out vec4 FragmentColor;
 
 void main(void) {
-  FragmentColor =texture2D(tex, texcoord);
+  FragmentColor =texture(tex, texcoord);
 }

@@ -106,8 +106,8 @@ void MeshAnimate::initGeometry(const std::vector<std::string> &obj_files) {
     glEnableVertexAttribArray(normal_attib);
     glVertexAttribPointer(normal_attib, 3, GL_FLOAT, GL_FALSE, 0, 0);
   } else {
-    std::cout << "Warning: OBJ file " << obj_files[0]
-    << " has no normals!" << std::endl;
+    //std::cout << "Warning: OBJ file " << obj_files[0]
+    //<< " has no normals!" << std::endl;
   }
 
   // --- Indices (define which triangles consists of which vertices) ---

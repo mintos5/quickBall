@@ -22,6 +22,7 @@ public:
     objectsCount lives;
     objectsCount extraLive;
     bool onePortal = true;
+    int lastObject = -1;
 private:
     PlayerPtr player;
     std::vector<int> genVector;

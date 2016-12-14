@@ -26,6 +26,9 @@ private:
   CameraPtr camera;
   float speed = 0.0f;
   float turningSpeed = 3.0f;
+  float lifeTime = 0.0f;
+  float pausedTimer = 0.0f;
+  bool paused = false;
   // Static resources (Shared between instances)
   static MeshPtr mesh;
   static ShaderPtr shader;

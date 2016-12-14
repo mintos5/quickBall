@@ -39,7 +39,7 @@ generator::generator(const PlayerPtr &player) : player(player) {
     this->uni1 = std::uniform_int_distribution<int>(0,genVector.size()-1);
     this->uni2 = std::uniform_int_distribution<int>(1,3);
     this->lives.max = 2;
-    this->extraLive.max = 121;
+    this->extraLive.max = 2;
 }
 
 generator::~generator() {
@@ -54,6 +54,10 @@ bool generator::Update(Scene &scene, float dt) {
             position.z -= 3.0f;
             int arrayPos = uni1(rng);
             int location = uni2(rng);
+            //Generate second object different
+            while(genVector[arrayPos]==this->lastObject){
+                arrayPos = uni1(rng);
+            }
             //Generate only MAX HEARTS
             while (genVector[arrayPos]==HEART){
                 if (this->lives.cur >= this->lives.max){
@@ -74,6 +78,7 @@ bool generator::Update(Scene &scene, float dt) {
                     break;
                 }
             }
+            this->lastObject = genVector[arrayPos];
             switch (genVector[arrayPos]){
                 case ENEMY: generateEnemy(scene,location);
                     break;
@@ -161,7 +166,6 @@ void generator::generateHeart(Scene &scene, int where) {
 void generator::generatePortal(Scene &scene) {
     auto portalPtr = PortalPtr(new portal{});
     portalPtr->position.z = GEN_LENGHT-3.0f;
-    std::cout << "Pridavam sa" << std::endl;
     scene.objects.push_back(portalPtr);
 }
 

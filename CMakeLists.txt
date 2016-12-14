@@ -68,7 +68,7 @@ add_library(libppgso STATIC
 # Make sure GLM uses radians and static GLEW library
 target_compile_definitions(libppgso PUBLIC -DGLM_FORCE_RADIANS -DGLEW_STATIC )
 # Link to GLFW, GLEW and OpenGL
-target_link_libraries(libppgso PUBLIC ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
+target_link_libraries(libppgso PUBLIC ${GLFW_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES})
 # Pass on include directories
 target_include_directories(libppgso PUBLIC
         src/lib
@@ -108,7 +108,7 @@ generate_shaders(GL_GAME_SHADERS
         src/glsl/back_frag.glsl
         src/glsl/object_vert_anim.glsl)
 add_executable(gl_quickball ${GL_GAME_SRC} ${GL_GAME_SHADERS})
-target_link_libraries(gl_quickball libppgso ${FREETYPE_LIBRARIES})
+target_link_libraries(gl_quickball libppgso)
 install(TARGETS gl_quickball DESTINATION .)
 
 # ADD YOUR PROJECT HERE

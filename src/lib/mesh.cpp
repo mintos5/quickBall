@@ -69,8 +69,8 @@ void Mesh::initGeometry(const std::string &obj_file) {
     glEnableVertexAttribArray(texcoord_attrib);
     glVertexAttribPointer(texcoord_attrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
   } else {
-    std::cout << "Warning: OBJ file " << obj_file
-              << " has no texture coordinates!" << std::endl;
+    //std::cout << "Warning: OBJ file " << obj_file
+    //          << " has no texture coordinates!" << std::endl;
   }
 
   // --- Normals ---
@@ -93,8 +93,8 @@ void Mesh::initGeometry(const std::string &obj_file) {
     glEnableVertexAttribArray(normal_attib);
     glVertexAttribPointer(normal_attib, 3, GL_FLOAT, GL_FALSE, 0, 0);
   } else {
-    std::cout << "Warning: OBJ file " << obj_file
-    << " has no normals!" << std::endl;
+    //std::cout << "Warning: OBJ file " << obj_file
+    //<< " has no normals!" << std::endl;
   }
 
   // --- Indices (define which triangles consists of which vertices) ---

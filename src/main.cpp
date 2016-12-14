@@ -13,6 +13,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <sstream>
 
 #include "scene.h"
 #include "camera.h"
@@ -29,9 +30,11 @@
 #include "enemyAnimate.h"
 
 #define DEF_LIVES 1
+#define DEF_SPEED 3
 
 const unsigned int SIZE = 700;
 int currentLevel;
+float currentSpeed;
 Scene scene;
 
 
@@ -45,10 +48,13 @@ void InitializeScene(int level) {
 
     //NEW GAME
     if (level==0){
-        auto title = WordPtr(new word{"QuickBall",20,50,0.7f,SIZE,SIZE});
+        auto title = WordPtr(new word{"QuickBall",SIZE/3,SIZE/2,1.0f,SIZE,SIZE});
         scene.objects.push_back(title);
+        auto controls = WordPtr(new word{"Control with arrows, press Enter to play game",SIZE/20,SIZE/17,0.6f,SIZE,SIZE});
+        scene.objects.push_back(controls);
         scene.playerStatus = DEF_LIVES;
         currentLevel = 1;
+        currentSpeed = DEF_SPEED;
         //LOAD ALL before loading
         auto objec1 = EnemyPtr(new enemy{});
         auto object2 = HeartPtr(new heart{});
@@ -59,15 +65,24 @@ void InitializeScene(int level) {
     }
     //GAME OVER
     if (level==-1){
-        auto title = WordPtr(new word{"GAME OVER",20,50,0.7f,SIZE,SIZE});
+        auto title = WordPtr(new word{"GAME OVER",SIZE/3,SIZE/2,0.7f,SIZE,SIZE});
         scene.objects.push_back(title);
+        std::stringstream ss;
+        ss << "ON " << currentLevel << ". LEVEL";
+        auto levelTitle = WordPtr(new word{ss.str(),SIZE/3,SIZE/3,0.7f,SIZE,SIZE});
+        scene.objects.push_back(levelTitle);
         scene.playerStatus = DEF_LIVES;
         currentLevel = 1;
+        currentSpeed = DEF_SPEED;
     }
     if (level==-2){
-        auto title = WordPtr(new word{"NEXT LEVEL",20,50,0.7f,SIZE,SIZE});
-        scene.objects.push_back(title);
         currentLevel++;
+        currentSpeed +=1.1f;
+
+        std::stringstream ss;
+        ss << "NEXT LEVEL " << currentLevel;
+        auto title = WordPtr(new word{ss.str(),SIZE/3,SIZE/2,0.7f,SIZE,SIZE});
+        scene.objects.push_back(title);
     }
 
     if (level>0) {
@@ -75,6 +90,7 @@ void InitializeScene(int level) {
         auto player = PlayerPtr(new Player{camera});
         player->position.y = -0.8;
         player->position.z = -3;
+        player->setSpeed(currentSpeed);
         scene.objects.push_back(player);
         scene.player = player;
 
