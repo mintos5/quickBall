@@ -169,6 +169,7 @@ int main() {
   glfwSetCursorPosCallback(window, OnMouseMove);
   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); // Hide mouse cursor
   glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+  glfwSwapInterval(1);
 
   // Initialize OpenGL state
   // Enable Z-buffer
@@ -194,7 +195,6 @@ int main() {
     // Compute time delta
     float dt = (float)glfwGetTime() - time;
     time = (float)glfwGetTime();
-
     // Set black back
     glClearColor(0.0f,0.0f,0.0f,0);
     // Clear depth and color buffers
