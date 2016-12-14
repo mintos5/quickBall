@@ -23,8 +23,9 @@ private:
     int y;
     float scale;
     bool changeable = false;
+    std::string textString;
     // Static resources (Shared between instances)
-    TextPtr textR;
+    static TextPtr textR;
     static ShaderPtr shader;
 
 };

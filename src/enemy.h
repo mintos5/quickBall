@@ -15,7 +15,6 @@
 class enemy  : public Object {
 public:
     enemy();
-
     enemy(bool combiAnimation);
 
     ~enemy();
@@ -28,6 +27,8 @@ private:
     float lifeTime = 0.0f;
     glm::vec3 worldPosition;
     bool combiAnimation = false;
+    int direction = true;
+    float animationSpeed = 0.8f;
     // Static resources (Shared between instances)
     static MeshPtr mesh;
     static ShaderPtr shader;

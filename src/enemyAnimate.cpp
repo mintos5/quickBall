@@ -42,10 +42,6 @@ enemyAnimate::~enemyAnimate() {
 
 bool enemyAnimate::Update(Scene &scene, float dt) {
     lifeTime += dt;
-//    this->position.x = this->worldPosition.x + sin(lifeTime)*0.7;
-//    this->position.z = this->worldPosition.z + cos(lifeTime)*0.7;
-//    this->rotation.z = (PI/2)*sin(lifeTime)*0.7;
-    //this->rotation.z = sin(lifeTime);
     if (this->combiAnimation) {
         this->position.x = this->worldPosition.x + sin(lifeTime)*0.7;
         this->position.z = this->worldPosition.z + cos(lifeTime)*0.7;
@@ -64,6 +60,7 @@ bool enemyAnimate::Update(Scene &scene, float dt) {
     } else {
         mesh->setKeyFrame(2);
     }
+
     if (glm::distance(position, scene.player->position) < scene.MIN_LENGHT) {
         std::cout << "enemyA" << std::endl;
         scene.playerStatus--;

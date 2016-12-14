@@ -12,7 +12,7 @@
 Player::Player() {
 
   // Scale the default model
-  scale *= 3.0f;
+  scale = glm::vec3(0.3,0.3,0.3);
 
   //rotation = glm::vec3(0,0,1.0);
 
@@ -24,7 +24,7 @@ Player::Player() {
 
 Player::Player(CameraPtr cam){
   this->camera = cam;
-  scale *= 3.0f;
+    scale = glm::vec3(0.3,0.3,0.3);
 
   //rotation = glm::vec3(0,0,1.0);
 
@@ -58,16 +58,17 @@ bool Player::Update(Scene &scene, float dt) {
         //this->camera->Update(scene,0.0f);
     }
     if(scene.keyboard[GLFW_KEY_LEFT]) {
-        position.x -= 2 * dt;
+        position.x -= turningSpeed * dt;
         rotation.y += 0.15f;
     }
     if(scene.keyboard[GLFW_KEY_RIGHT]) {
-        position.x += 2 * dt;
+        position.x += turningSpeed * dt;
         rotation.y -= 0.15f;
     }
     //std::cout << "positionZ: " << this->position.z << std::endl;
 
     //std::cout << "positionZ: " << this->position.z << "positionX: " << this->position.x <<std::endl;
+    position.z -= this->speed * dt;
 
     //sending destructor location
     scene.position.z = this->position.z;
@@ -91,6 +92,10 @@ void Player::Render(Scene &scene) {
   shader->SetMatrix(modelMatrix, "ModelMatrix");
   shader->SetTexture(texture, "Texture");
   mesh->Render();
+}
+
+void Player::setSpeed(float speed) {
+    Player::speed = speed;
 }
 
 // shared resources

@@ -16,7 +16,7 @@ enemy::enemy() {
     this->position.z = -3;
     this->position.x = 0;
     this->worldPosition = this->position;
-    this->rotation.z = PI/2;
+    this->rotation.z = 0.5f*PI;
 }
 
 enemy::enemy(bool combiAnimation) : combiAnimation(combiAnimation) {
@@ -45,10 +45,31 @@ bool enemy::Update(Scene &scene, float dt) {
     if (this->combiAnimation) {
         this->position.x = this->worldPosition.x + sin(lifeTime)*0.7;
         this->position.z = this->worldPosition.z + cos(lifeTime)*0.7;
-        this->rotation.z = (PI/2)*sin(lifeTime)*0.7;
+        this->rotation.z = (PI/2)*sin(lifeTime)*animationSpeed;
     }
     else {
-        this->position.x = this->worldPosition.x + sin(lifeTime)*0.4;
+        if (direction==1){
+            this->position.x += dt*animationSpeed;
+        }
+        if (direction==-1) {
+            this->position.x -= dt*animationSpeed;
+        }
+        if (this->position.x >= 0.8){
+            direction = 0;
+            this->rotation.z +=dt*animationSpeed*2;
+            if (this->rotation.z >= (1.5f*PI) ){
+                direction = -1;
+                this->rotation.z = 1.5f*PI;
+            }
+        }
+        if (this->position.x <= - 0.8){
+            direction = 0;
+            this->rotation.z +=dt*animationSpeed*2;
+            if (this->rotation.z >= (2.5f*PI) ){
+                direction = 1;
+                this->rotation.z = PI/2;
+            }
+        }
 
     }
     if (this->position.z > scene.position.z+scene.OUT){

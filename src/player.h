@@ -20,9 +20,12 @@ public:
   bool Update(Scene &scene, float dt) override;
   void Render(Scene &scene) override;
 
+    void setSpeed(float speed);
+
 private:
   CameraPtr camera;
-
+  float speed = 0.0f;
+  float turningSpeed = 3.0f;
   // Static resources (Shared between instances)
   static MeshPtr mesh;
   static ShaderPtr shader;

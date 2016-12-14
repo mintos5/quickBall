@@ -28,43 +28,99 @@
 #include "combined.h"
 #include "enemyAnimate.h"
 
-#define DEF_LIVES 3
+#define DEF_LIVES 1
 
 const unsigned int SIZE = 700;
-int currentLevel = 1;
+int currentLevel;
 Scene scene;
 
 
 // Set up the scene
-void InitializeScene(int lives,int level) {
-  scene.objects.clear();
+void InitializeScene(int level) {
+    scene.objects.clear();
+    // Create a camera
+    auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 40.0f});
+    //camera->position.z = -10.0f;
+    scene.camera = camera;
 
-  // Create a camera
-  auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 40.0f});
-  //camera->position.z = -10.0f;
-  scene.camera = camera;
+    //NEW GAME
+    if (level==0){
+        auto title = WordPtr(new word{"QuickBall",20,50,0.7f,SIZE,SIZE});
+        scene.objects.push_back(title);
+        scene.playerStatus = DEF_LIVES;
+        currentLevel = 1;
+        //LOAD ALL before loading
+        auto objec1 = EnemyPtr(new enemy{});
+        auto object2 = HeartPtr(new heart{});
+        auto object3 = CombiPtr(new combined{});
+        auto object4 = FencePtr(new fence{});
+        auto object5 = EnemyAnimPtr(new enemyAnimate{});
+        auto object6 = PortalPtr(new portal{});
+    }
+    //GAME OVER
+    if (level==-1){
+        auto title = WordPtr(new word{"GAME OVER",20,50,0.7f,SIZE,SIZE});
+        scene.objects.push_back(title);
+        scene.playerStatus = DEF_LIVES;
+        currentLevel = 1;
+    }
+    if (level==-2){
+        auto title = WordPtr(new word{"NEXT LEVEL",20,50,0.7f,SIZE,SIZE});
+        scene.objects.push_back(title);
+        currentLevel++;
+    }
 
-  // Add generator to scene
+    if (level>0) {
+        // Add player to the scene
+        auto player = PlayerPtr(new Player{camera});
+        player->position.y = -0.8;
+        player->position.z = -3;
+        scene.objects.push_back(player);
+        scene.player = player;
 
-  // Add player to the scene
-  auto player = PlayerPtr(new Player{camera});
-  player->position.y = -0.8;
-  player->position.z = -3;
-    player->scale = glm::vec3(0.3,0.3,0.3);
-  scene.objects.push_back(player);
-  scene.player = player;
+        //GROUND
+        auto test = GroundPtr(new ground{});
+        test->position.z = -100;
+        scene.objects.push_back(test);
 
-  //add test object
+        //BACKGROUND
+        auto background = BackPtr(new back{SIZE,SIZE});
+        scene.objects.push_back(background);
+
+        // Add generator to scene
+        auto gene = GeneratorPtr(new generator{player});
+        scene.objects.push_back(gene);
+
+        //Add OSD
+        auto objectOSD2 = WordPtr(new word{"",20,(SIZE/10)*9,0.7f,SIZE,SIZE});
+        objectOSD2->setChangeable(true);
+        scene.objects.push_back(objectOSD2);
+    }
+
+
+    /*// Create a camera
+    auto camera = CameraPtr(new Camera{ 60.0f, 1.0f, 0.1f, 40.0f});
+    //camera->position.z = -10.0f;
+    scene.camera = camera;
+
+    // Add generator to scene
+
+    // Add player to the scene
+    auto player = PlayerPtr(new Player{camera});
+    player->position.y = -0.8;
+    player->position.z = -3;
+    scene.objects.push_back(player);
+    scene.player = player;
+    scene.playerStatus = lives;
+
+    //add test object
     auto test = GroundPtr(new ground{});
     test->position.z = -100;
     scene.objects.push_back(test);
 
     auto object = EnemyPtr(new enemy{});
-//    object->scale = glm::vec3(3,3,3);
-//    object->position.y = -5.7;
     object->position.z = -5;
-    object->position.x = 1.0;
-//    object->rotation.z = PI;
+    object->position.x = 0.0;
     //scene.objects.push_back(object);
 
     auto object4 = PortalPtr(new portal{});
@@ -72,20 +128,19 @@ void InitializeScene(int lives,int level) {
     object4->position.x = 1.0;
     //scene.objects.push_back(object4);
 
-  auto background = BackPtr(new back{SIZE,SIZE});
-  scene.objects.push_back(background);
+    auto background = BackPtr(new back{SIZE,SIZE});
+    scene.objects.push_back(background);
 
     auto objectOSD = WordPtr(new word{"Xww: ",20,50,0.7f,SIZE,SIZE});
     scene.objects.push_back(objectOSD);
 
-  auto objectOSD2 = WordPtr(new word{"Yzz: ",20,(SIZE/10)*9,0.7f,SIZE,SIZE});
-  objectOSD2->setChangeable(true);
-  scene.objects.push_back(objectOSD2);
+    auto objectOSD2 = WordPtr(new word{"",20,(SIZE/10)*9,0.7f,SIZE,SIZE});
+    objectOSD2->setChangeable(true);
+    scene.objects.push_back(objectOSD2);
 
 
     auto object2 = HeartPtr(new heart{});
     object2->position.z = -4;
-    object2->position.x = 1.0;
     //scene.objects.push_back(object2);
 
     auto gene = GeneratorPtr(new generator{player});
@@ -95,25 +150,24 @@ void InitializeScene(int lives,int level) {
     //scene.objects.push_back(combi);
     auto animacny = EnemyAnimPtr(new enemyAnimate{});
     //scene.objects.push_back(animacny);
-    auto animacny2 = EnemyAnimPtr(new enemyAnimate{});
-    animacny2->position.z = -6.0f;
-    //scene.objects.push_back(animacny2);
 
-  auto object3 = FencePtr(new fence{});
-  object3->position.z = -3;
-  object3->position.x = 1.0;
-  //scene.objects.push_back(object3);
-  scene.playerStatus = 4;
+    auto object3 = FencePtr(new fence{});
+    object3->position.z = -3;
+    //scene.objects.push_back(object3);*/
+
 }
 
 // Keyboard press event handler
 void OnKeyPress(GLFWwindow* /* window */, int key, int /* scancode */, int action, int /* mods */) {
-  scene.keyboard[key] = action;
-
-  // Reset
-  if (key == GLFW_KEY_R && action == GLFW_PRESS) {
-    InitializeScene(DEF_LIVES,0);
-  }
+    scene.keyboard[key] = action;
+    // Reset
+    if (key == GLFW_KEY_R && action == GLFW_PRESS) {
+        scene.playerStatus = 1;
+        InitializeScene(1);
+    }
+    if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+        InitializeScene(currentLevel);
+    }
 }
 
 // Mouse move event handler
@@ -177,7 +231,7 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  InitializeScene(DEF_LIVES,0);
+  InitializeScene(0);
 
   // Track time
   float time = (float)glfwGetTime();
@@ -188,7 +242,7 @@ int main() {
     float dt = (float)glfwGetTime() - time;
     time = (float)glfwGetTime();
 
-    // Set gray back
+    // Set black back
     glClearColor(0.0f,0.0f,0.0f,0);
     // Clear depth and color buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -196,15 +250,14 @@ int main() {
     // Update and render all objects
     int up = scene.Update(dt);
     scene.Render();
-    std::cout << scene.playerStatus << std::endl;
       if (up==0){//NORMAL
           ;
       }
       if (up==-1){//GAME OVER
-          InitializeScene(DEF_LIVES,-1);
+          InitializeScene(-1);
       }
-      if (up==-1){//NEXT LEVEL
-          InitializeScene(scene.playerStatus,++currentLevel);
+      if (up==1){//NEXT LEVEL
+          InitializeScene(-2);
       }
     // Display result
     glfwSwapBuffers(window);

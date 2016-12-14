@@ -15,12 +15,14 @@ word::word(std::string text,int x,int y,float scale,int sizeX,int sizeY) {
     this->sizeX = sizeX;
     this->sizeY = sizeY;
     this->scale = scale;
+    this->textString = text;
     if (!shader) shader = ShaderPtr(new Shader{text_vert, text_frag});
     if (!textR) textR = TextPtr(new texts{shader,text});
 }
 word::~word() {}
 
 bool word::Update(Scene &scene, float dt) {
+    textR->setWords(textString);
     if (changeable){
         std::stringstream ss;
         ss << "LIVES: " << scene.playerStatus;
@@ -40,7 +42,8 @@ void word::Render(Scene &scene) {
 }
 
 void word::setChangeable(bool changeable) {
-    word::changeable = changeable;
+    this->changeable = changeable;
 }
 
 ShaderPtr word::shader;
+TextPtr word::textR;

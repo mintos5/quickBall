@@ -30,13 +30,16 @@ generator::generator(const PlayerPtr &player) : player(player) {
     genVector.push_back(FENCE);
     genVector.push_back(FENCE);
     genVector.push_back(FENCE);
+    genVector.push_back(FENCE);
+    genVector.push_back(FENCE);
+    genVector.push_back(FENCE);
     genVector.push_back(HEART);
     genVector.push_back(SUPER_ENEMY);
     genVector.push_back(SUPER_HEART);
     this->uni1 = std::uniform_int_distribution<int>(0,genVector.size()-1);
     this->uni2 = std::uniform_int_distribution<int>(1,3);
     this->lives.max = 2;
-    this->extraLive.max = 1;
+    this->extraLive.max = 121;
 }
 
 generator::~generator() {
@@ -53,7 +56,7 @@ bool generator::Update(Scene &scene, float dt) {
             int location = uni2(rng);
             //Generate only MAX HEARTS
             while (genVector[arrayPos]==HEART){
-                if (this->lives.cur>this->lives.max){
+                if (this->lives.cur >= this->lives.max){
                     arrayPos = uni1(rng);
                 }
                 else {
@@ -63,7 +66,7 @@ bool generator::Update(Scene &scene, float dt) {
             }
             //Generate only MAX SUPER_HEARTS
             while (genVector[arrayPos]==SUPER_HEART){
-                if (this->extraLive.cur>this->extraLive.max){
+                if (this->extraLive.cur >= this->extraLive.max){
                     arrayPos = uni1(rng);
                 }
                 else {
